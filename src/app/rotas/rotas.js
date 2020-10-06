@@ -46,6 +46,14 @@ module.exports = (app) => {
 
     app.post('/livros', function(req, resp){
         console.log(req.body);
+        //instacia do livroDAO da conx com DB 
+        const livroDao = new LivroDao(db);
+        //usando promises 
+        livroDao.adiciona(req.body)
+           .then(resp .redirect('/livros'))
+           .catch(erro =>
+              console.log(erro) 
+           );
     });
 };
 
