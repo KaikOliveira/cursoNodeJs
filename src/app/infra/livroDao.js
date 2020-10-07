@@ -44,6 +44,63 @@ class LivroDao {
         });
         
     }
+    //Promisse BUSCAR POR ID Livro
+    buscaPorId(id) {
+        return new Promise((resolve, reject) =>{
+            this._db.get(`
+                SELECT * FROM livros WHERE id = ?
+            `, 
+            [id],
+            (erro, livro) => {
+                if (erro) {
+                    return reject ('Não foi possivel encontrar o livro !');
+                }
+                    return resolve(livro);
+               }
+            );
+        });
+    }
+    //Promisse Atualiza
+    atualiza(livro) {
+        return new Promisse ((resolve, reject) => {
+            this._db.run(`
+                UPDATE livros Set 
+                    titulo = ?,
+                    preco = ?,
+                    descricao = ?
+                WHARE id = ?
+            `,
+                [
+                    livro.titulo,
+                    livro.preco,
+                    livro.descricao,
+                    livro.id
+                ],
+                erro => {
+                    if (erro) {
+                        return reject ('Não foi possivel atualizar o livro!');
+                    }
+                    resolve();
+            });
+        });
+    }
+    //Promisse Remove Livro por ID
+    remove(id) {
+        return new Promisse ((resolve, reject) => {
+            this._db.run(`
+                DELETE FROM livros WHERE id = ?
+            `,
+                [id],
+                (erro) => {
+                    if (erro) {
+                        return reject ('Nao foi possivel remover o Livro!');
+                    }
+                    return resolve();
+                }
+            );
+        });
+    }
 }
 
 module.exports = LivroDao;
+

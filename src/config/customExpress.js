@@ -6,6 +6,10 @@ const express = require('express');
 const app = express();
 //req do bodyParser para Middlewares
 const bodyParser = require('body-parser');
+
+//config Middlewares para pag estatico
+app.use('/estatico', express.static('src/app/public'));
+
 //config 
 app.use(bodyParser.urlencoded({
     extended: true
