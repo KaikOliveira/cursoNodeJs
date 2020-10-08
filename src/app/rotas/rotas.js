@@ -25,51 +25,32 @@ module.exports = (app) => {
        
      //instacia do livroDAO da conx com DB   
      const livroDao = new LivroDao(db);
-     //usando promises 
+     //usando Promise
      livroDao.lista()
         .then(livros => resp.marko (
-            require('../views/livros/lista/lista.marko'),{
+            require('../views/livros/lista/lista.marko'),
+            {
                 livros: livros
             }
         ))
         .catch(erro =>
-           console.log(erro) 
-        );
+           console.log(erro) );
 
     });
 
+    //Rota para Cadastro/FORM
     app.get('/livros/form', function(req, resp){
         resp.marko(
-            require('../views/livros/form/form.marko')
-            );
+            require('../views/livros/form/form.marko'), {livro: {}} );
     });
 
-    app.post('/livros', function(req, resp){
-        console.log(req.body);
-        //instacia do livroDAO da conx com DB 
-        const livroDao = new LivroDao(db);
-        //usando promises 
-        livroDao.adiciona(req.body)
-           .then(resp .redirect('/livros'))
-           .catch(erro =>
-              console.log(erro) 
-           );
-    });
-
-    app.delete('/livros/:id', function(req, resp) {
+     //ROTA para Edição
+     app.get('/livros/form/:id', function(req, resp) {
         const id = req.params.id;
-        //instacia de livroDAO da conx com DB
+        //instacia de LivroDAO da conx com DB
         const livroDao = new LivroDao(db);
-        livroDao.remove(id)
-            .then(() => resp.status(200).end())
-            .catch(erro => console.log(erro));
-    });
-
-    app.get('/livros/form/:id', function(req, resp) {
-        const id = req.params.id;
-        const livroDao = new LivroDao(db);
-
-        livroDao.buscarPorId(id)
+        //Promise
+        livroDao.buscaPorId(id)
             .then(livro =>
                 resp.marko(
                     require('../views/livros/form/form.marko'),
@@ -78,6 +59,42 @@ module.exports = (app) => {
             )
             .catch(erro => console.log(erro));
     });
+
+    //Rota para Adicionar 
+    app.post('/livros', function(req, resp){
+        console.log(req.body);
+        //instacia do livroDAO da conx com DB 
+        const livroDao = new LivroDao(db);
+        //usando promisse 
+        livroDao.adiciona(req.body)
+           .then(resp.redirect('/livros'))
+           .catch(erro =>
+              console.log(erro) 
+           );
+    });
+    //Editar ??
+    app.put('/livros', function(req, resp){
+        console.log(req.body);
+        //instacia do livroDAO da conx com DB 
+        const livroDao = new LivroDao(db);
+        //usando Promise 
+        livroDao.atualiza(req.body)
+           .then(resp.redirect('/livros'))
+           .catch(erro =>
+              console.log(erro) 
+           );
+    });
+    //ROTA para delete 
+    app.delete('/livros/:id', function(req, resp) {
+        const id = req.params.id;
+        //instacia de livroDAO da conx com DB
+        const livroDao = new LivroDao(db);
+        //Promise
+        livroDao.remove(id)
+            .then(() => resp.status(200).end())
+            .catch(erro => console.log(erro));
+    });
+     
 };
 
 

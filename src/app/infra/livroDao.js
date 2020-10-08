@@ -62,13 +62,13 @@ class LivroDao {
     }
     //Promisse Atualiza
     atualiza(livro) {
-        return new Promisse ((resolve, reject) => {
+        return new Promise ((resolve, reject) => {
             this._db.run(`
-                UPDATE livros Set 
+                UPDATE livros SET 
                     titulo = ?,
                     preco = ?,
                     descricao = ?
-                WHARE id = ?
+                WHERE id = ?
             `,
                 [
                     livro.titulo,
@@ -76,7 +76,7 @@ class LivroDao {
                     livro.descricao,
                     livro.id
                 ],
-                erro => {
+               erro  => {
                     if (erro) {
                         return reject ('Não foi possivel atualizar o livro!');
                     }
@@ -86,8 +86,8 @@ class LivroDao {
     }
     //Promisse Remove Livro por ID
     remove(id) {
-        return new Promisse ((resolve, reject) => {
-            this._db.run(`
+        return new Promise ((resolve, reject) => {
+            this._db.get(`
                 DELETE FROM livros WHERE id = ?
             `,
                 [id],
