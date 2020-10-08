@@ -65,7 +65,7 @@ module.exports = (app) => {
         console.log(req.body);
         //instacia do livroDAO da conx com DB 
         const livroDao = new LivroDao(db);
-        //usando promisse 
+        //usando Promise 
         livroDao.adiciona(req.body)
            .then(resp.redirect('/livros'))
            .catch(erro =>

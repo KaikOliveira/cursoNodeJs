@@ -4,7 +4,7 @@ class LivroDao {
     constructor(db) {
         this._db = db;
     }
-    //Promisse ADICIONAR LIVRO
+    //Promise ADICIONAR LIVRO
     adiciona(livro){
         return new Promise((resolve, reject) => {
             this._db.run(`
@@ -28,7 +28,7 @@ class LivroDao {
             )
         });
     }
-    //Promisse LISTAR LIVRO
+    //Promise LISTAR LIVRO
     lista(){
         return new Promise ((resolve, reject) => {
             this._db.all(
@@ -44,7 +44,7 @@ class LivroDao {
         });
         
     }
-    //Promisse BUSCAR POR ID Livro
+    //Promise BUSCAR POR ID Livro
     buscaPorId(id) {
         return new Promise((resolve, reject) =>{
             this._db.get(`
@@ -60,7 +60,7 @@ class LivroDao {
             );
         });
     }
-    //Promisse Atualiza
+    //Promise Atualiza
     atualiza(livro) {
         return new Promise ((resolve, reject) => {
             this._db.run(`
@@ -84,7 +84,7 @@ class LivroDao {
             });
         });
     }
-    //Promisse Remove Livro por ID
+    //Promise Remove Livro por ID
     remove(id) {
         return new Promise ((resolve, reject) => {
             this._db.get(`
